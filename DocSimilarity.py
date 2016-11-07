@@ -59,7 +59,7 @@ class SimilarityReporter:
 		return triples
 
 	def getSimilarityIndexSingles(self):
-		
+
 		matches = 0
 		attempts = 0
 
@@ -72,7 +72,7 @@ class SimilarityReporter:
 		print('Single word matches: {}/{} matches, {} match percentage'\
 			  .format(matches, attempts,
 			   round(((float(matches) / attempts) * 100), 3)))
-		
+
 		return matches / attempts
 
 	def getSimilarityIndexDoubles(self):
@@ -136,20 +136,25 @@ class SimilarityReporter:
 			print('These two documents are very similar. It is highly likely that the document in question is plagiarized.')
 
 
-if __name__ == '__main__':
+def main():
 
-	
 	base_path = input('Enter the path to the base document\n(Current directory is: {})\n'
 		.format(os.getcwd()))
 	input_path = input('Enter the path to document to be analyzed\n'
 		.format(os.getcwd()))
-	
+
 	try:
-		base_corpus = open(base_path, 'r').read()
-		input_corpus = open(input_path, 'r').read()
+		with open(base_path, 'r') as f:
+			base_corpus = f.read()
+		with open(input_path, 'r') as f:
+			input_corpus = f.read()
 	except FileNotFoundError:
 		print('Invalid Files. Double check your filenames!\n')
 		os._exit(1)
 
 	my_mcc = SimilarityReporter(base_corpus, input_corpus)
 	my_mcc.printReport()
+
+
+if __name__ == '__main__':
+	main()
